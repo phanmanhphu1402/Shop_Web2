@@ -2,7 +2,7 @@
     $host="localhost";
     $username= "root";
     $password="";
-    $database="cossoft_db";
+    $database="cossoft_db1";
 
     $conn=mysqli_connect($host, $username, $password, $database);
     mysqli_set_charset($conn,'utf8');
@@ -12,4 +12,4 @@
         die("Connection Faild ". mysqli_connect_errno());
         echo "Something Wrong";
     }
-?>
+?>  

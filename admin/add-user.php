@@ -14,27 +14,27 @@ include("../admin/includes/header.php");
                         <form action="code.php" method="POST">
                             <div class="mb-3">
                                 <label class="form-label">Họ tên</label>
-                                <input type="text" name="name" class="form-control" required>
+                                <input type="text" name="name" placeholder="Nhập họ và tên" class="form-control" required>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Email</label>
-                                <input type="email" name="email" class="form-control" required>
+                                <input type="email" name="email" placeholder="Nhập email" class="form-control" required>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Số điện thoại</label>
-                                <input type="text" name="phone" class="form-control" required>
+                                <input type="text" name="phone" placeholder="Nhập số điện thoại" class="form-control" required>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Địa chỉ</label>
-                                <input type="text" name="address" class="form-control" required>
+                                <input type="text" name="address" placeholder="Nhập địa chỉ" class="form-control" required>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Mật khẩu</label>
-                                <input type="password" name="password" class="form-control" required>
+                                <input type="password" name="password" placeholder="Nhập mật khẩu" class="form-control" required>
                             </div>
 
                             <div class="mb-3">

@@ -11,7 +11,7 @@ $page= substr($_SERVER['SCRIPT_NAME'], strripos($_SERVER['SCRIPT_NAME'],"/")+1);
       </a>
     </div>
     <hr class="horizontal light mt-0 mb-2">
-    <div class="collapse navbar-collapse  w-auto" id="sidenav-collapse-main" style="height: 75vh">
+    <div class="collapse navbar-collapse  w-auto" id="sidenav-collapse-main" style="height: 70vh">
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link text-white <?= $page== "index.php"? 'active bg-gradient-primary':'' ?>" href="../admin/index.php">
@@ -37,6 +37,14 @@ $page= substr($_SERVER['SCRIPT_NAME'], strripos($_SERVER['SCRIPT_NAME'],"/")+1);
             <span class="nav-link-text ms-1">Quản lý đơn hàng</span>
           </a>
         </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link text-white <?= $page== "order-detail.php"? 'active bg-gradient-primary':'' ?>" href="order-detail.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">weekend</i>
+            </div>
+            <span class="nav-link-text ms-1">Quản lý chi tiết đơn hàng</span>
+          </a>
+        </li> -->
         <li class="nav-item">
           <a class="nav-link text-white <?= $page== "category.php"? 'active bg-gradient-primary':'' ?>" href="category.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -83,6 +91,14 @@ $page= substr($_SERVER['SCRIPT_NAME'], strripos($_SERVER['SCRIPT_NAME'],"/")+1);
               <i class="material-icons opacity-10">receipt_long</i>
             </div>
             <span class="nav-link-text ms-1">Tất cả bài viết</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white <?= $page== "thongke.php"? 'active bg-gradient-primary':'' ?>" href="thongke.php">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">table_view</i>
+            </div>
+            <span class="nav-link-text ms-1">Thống kê</span>
           </a>
         </li>
       </ul>

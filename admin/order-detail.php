@@ -75,11 +75,11 @@ $total = 0;
                                             </div>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">Tổng: $
+                                            <p class="text-xs font-weight-bold mb-0">Tổng: 
                                                 <?=
                                                 $total_product = $order['quantity'] * $order['selling_price'];
                                                 $total += $total_product;
-                                                ?>
+                                                ?> vnd
                                             </p>
                                             <p class="text-xs text-secondary mb-0">Số lượng: <?= $order['quantity'] ?></p>
                                         </td>
@@ -95,7 +95,7 @@ $total = 0;
                             </tbody>
                         </table>
                         <div style="padding-left: 20px">
-                            <h2>Tổng: $<?= $total ?></h2>
+                            <h2>Tổng: <?= $total ?> vnd</h2>
                         </div>
                     </div>
                 </div>

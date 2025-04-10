@@ -38,7 +38,7 @@ $page= substr($_SERVER['SCRIPT_NAME'], strripos($_SERVER['SCRIPT_NAME'],"/")+1);
                 }
                 else if($page== "order-detail.php")
                 {
-                  echo "Quản lý đơn hàng / order-detail ";
+                  echo "Quản lý chi tiết đơn hàng  ";
                 }
                 else if($page== "add-blog.php")
                 {
@@ -48,65 +48,9 @@ $page= substr($_SERVER['SCRIPT_NAME'], strripos($_SERVER['SCRIPT_NAME'],"/")+1);
                 {
                   echo "Tất cả bài viết ";
                 }
-                else if($page== "edit-blog.php")
+                else if($page== "thongke.php")
                 {
-                  echo "Chỉnh sửa bài viết ";
-                }
-                else if($page== "edit-user.php")
-                {
-                  echo "Chỉnh sửa người dùng ";
-                }
-                else if($page== "lock-user.php")
-                {
-                  echo "Khóa người dùng ";
-                }
-                else if($page== "edit-category.php")
-                {
-                  echo "Chỉnh sửa danh mục ";
-                }
-                else if($page== "edit-product.php")
-                {
-                  echo "Chỉnh sửa sản phẩm ";
-                }
-                else if($page== "profile.php")
-                {
-                  echo "Thông tin cá nhân ";
-                }
-                else if($page== "change-password.php")
-                {
-                  echo "Đổi mật khẩu ";
-                }
-                else if($page== "settings.php")
-                {
-                  echo "Cài đặt ";
-                }
-                else if($page== "logout.php")
-                {
-                  echo "Đăng xuất ";
-                }
-                else if($page== "unlock-user.php")
-                {
-                  echo "Mở khóa người dùng ";
-                }
-                else if($page== "view-order.php")
-                {
-                  echo "Xem đơn hàng ";
-                }
-                else if($page== "view-product.php")
-                {
-                  echo "Xem sản phẩm ";
-                }
-                else if($page== "view-blog.php")
-                {
-                  echo "Xem bài viết ";
-                }
-                else if($page== "view-category.php")
-                {
-                  echo "Xem danh mục ";
-                }
-                else
-                {
-                  echo " ";
+                  echo "Thống kê ";
                 }
               ?>
             </li>
