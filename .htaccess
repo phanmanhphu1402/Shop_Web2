@@ -1,0 +1,3 @@
+<Files "PayInclude.php">
+    Deny from all
+</Files>
