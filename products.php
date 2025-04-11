@@ -30,7 +30,6 @@ $page ++;
                             <ul class="filter-list">
                                 <?php
                                 $categories = getAllActive("categories");
-
                                 if (mysqli_num_rows($categories) > 0) {
                                     foreach ($categories as $item) {
                                 ?>
@@ -59,7 +58,7 @@ $page ++;
                         <div class="box">
                             <div class="row" id="products">
                             <?php foreach ($products as $product) { ?>
-                                <div class="col-4 col-md-6 col-sm-12">
+                                <div class="col-3 col-md-4 col-sm-6">
                                     <div class="product-card">
                                         <div class="product-card-img">
                                         <a href="./product-detail.php?slug=<?= $product['slug'] ?>">
@@ -72,15 +71,22 @@ $page ++;
                                                 <a href="./product-detail.php?slug=<?= $product['slug'] ?>" class="btn-flat btn-hover btn-shop-now">Mua ngay</a>
                                                 <button class="btn-flat btn-hover btn-cart-add">
                                                     <i class='bx bxs-cart-add'></i>
-                                                </button>
-                                                
+                                                </button>    
                                             </div>
                                             <div class="product-card-name">
                                                 <?= $product['name'] ?>
                                             </div>
-                                            <div class="product-card-price">
-                                                <span><del>$<?= $product['original_price'] ?></del></span>
-                                                <span class="curr-price">$<?= $product['selling_price'] ?></span>
+                                            <div class="product-price">
+                                                <?php 
+                                                    $formatted_price = number_format($product['selling_price'], 0, ',', '.') . '₫';
+                                                    $formatted_original = number_format($product['original_price'], 0, ',', '.') . '₫';
+                                                ?>
+                                                <span style="color: red; font-weight: bold;">
+                                                    <?= $formatted_price ?>
+                                                </span>
+                                                <del style="color: gray; opacity: 0.6; margin-left: 8px;">
+                                                    <?= $formatted_original ?>
+                                                </del>
                                             </div>
                                         </div>
                                     </div>

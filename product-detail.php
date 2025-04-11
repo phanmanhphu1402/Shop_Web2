@@ -69,7 +69,18 @@
                         <p class="product-description">
                             <?= nl2br($product['small_description']) ?>
                         </p>
-                        <div class="product-info-price">$<?= $product['selling_price'] ?></div>
+                        <div class="product-price">
+                            <?php 
+                                $formatted_price = number_format($product['selling_price'], 0, ',', '.') . '₫';
+                                $formatted_original = number_format($product['original_price'], 0, ',', '.') . '₫';
+                            ?>
+                            <span style="color: red; font-weight: bold;">
+                                <?= $formatted_price ?>
+                            </span>
+                            <del style="color: gray; opacity: 0.6; margin-left: 8px;">
+                                <?= $formatted_original ?>
+                            </del>
+                        </div>
                         <div class="product-quantity-wrapper">
                             <span class="product-quantity-btn" onclick="QualityChange('down')">
                                 <i class='bx bx-minus'></i>

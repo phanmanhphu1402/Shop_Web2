@@ -44,35 +44,45 @@ if(isset($_POST['register-btn']))
 }
 else if(isset($_POST['login_btn']))
 {
-    $email= mysqli_real_escape_string($conn, $_POST['email']);
-    $password=mysqli_real_escape_string($conn,$_POST['password']);
-    $login_query="SELECT * FROM `users` WHERE `email`='$email'";
-    $login_query_run=mysqli_query($conn,$login_query);
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $password = mysqli_real_escape_string($conn, $_POST['password']);
+
+    $login_query = "SELECT * FROM `users` WHERE `email`='$email'";
+    $login_query_run = mysqli_query($conn, $login_query);
 
     if(mysqli_num_rows($login_query_run) > 0)
     {
-        $userdata   =   mysqli_fetch_array($login_query_run);
-        $verify= password_verify($password, $userdata['password']);
+        $userdata = mysqli_fetch_array($login_query_run);
+
+        // ✅ Kiểm tra trạng thái tài khoản
+        if($userdata['status'] == 0) {
+            redirect("../login.php", "Tài khoản của bạn đã bị khóa. Vui lòng liên hệ quản trị viên để biết thêm chi tiết.");
+        }
+
+        // ✅ Kiểm tra mật khẩu
+        $verify = password_verify($password, $userdata['password']);
         if($verify)
         {
-            $_SESSION['auth']=true;
+            $_SESSION['auth'] = true;
 
-            $userid     =   $userdata['id'];
-            $username   =   $userdata['name'];
-            $useremail  =   $userdata['email'];
-            $role_as    =   $userdata['role_as'];
+            $userid     = $userdata['id'];
+            $username   = $userdata['name'];
+            $useremail  = $userdata['email'];
+            $role_as    = $userdata['role_as'];
             
-            $_SESSION['auth_user']=[
-                'id'    =>  $userid,
-                'name'  =>  $username,
-                'email' =>  $useremail
+            $_SESSION['auth_user'] = [
+                'id'    => $userid,
+                'name'  => $username,
+                'email' => $useremail
             ];
             
-            $_SESSION['role_as']= $role_as;
+            $_SESSION['role_as'] = $role_as;
+
             if($role_as == 1)
             {   
-                redirect("../admin/index.php", "Welcome to ADMIN ");
-            }else
+                redirect("../admin/index.php", "Welcome to ADMIN");
+            }
+            else
             {
                 redirect("../index.php", "Đăng nhập thành công");
             }
@@ -81,11 +91,13 @@ else if(isset($_POST['login_btn']))
         {
             redirect("../login.php", "Mật khẩu không đúng");
         }
-    }else
+    }
+    else
     {
         redirect("../login.php", "Tài khoản email không tồn tại");
     }
 }
+
 else if(isset($_POST['update_user_btn']))
 {
     $id=$_SESSION['auth_user']['id'];

@@ -2,7 +2,7 @@
     $host="localhost";
     $username= "root";
     $password="";
-    $database="cossoft_db1";
+    $database="cossoft_db";
 
     $conn=mysqli_connect($host, $username, $password, $database);
     mysqli_set_charset($conn,'utf8');
