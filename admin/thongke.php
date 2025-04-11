@@ -16,8 +16,13 @@ include ("../admin/includes/header.php");
 
     <?php
     if (isset($_GET['from']) && isset($_GET['to'])) {
-        $from = $_GET['from'];
-        $to = $_GET['to'];
+        $from = mysqli_real_escape_string($conn, $_GET['from']);
+        $to = mysqli_real_escape_string($conn, $_GET['to']);
+
+        if ($from > $to) {
+            echo "<p class='text-danger'>Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc.</p>";
+            return;
+        }
 
         $query = "
             SELECT u.id AS user_id, u.name, u.email, SUM(od.selling_price * od.quantity) AS total_spent
@@ -29,7 +34,7 @@ include ("../admin/includes/header.php");
             ORDER BY total_spent DESC
             LIMIT 5
         ";
-        $result = mysqli_query($con, $query);
+        $result = mysqli_query($conn, $query);
 
         if (mysqli_num_rows($result) > 0) {
             while ($user = mysqli_fetch_assoc($result)) {
@@ -49,11 +54,11 @@ include ("../admin/includes/header.php");
                     GROUP BY o.id
                     ORDER BY o.created_at DESC
                 ";
-                $orders = mysqli_query($con, $order_detail_query);
+                $orders = mysqli_query($conn, $order_detail_query);
 
                 echo "<ul>";
                 while ($order = mysqli_fetch_assoc($orders)) {
-                    echo "<li>Đơn hàng <a href='order-detail.php?id={$order['order_id']}'>#{$order['order_id']}</a>
+                    echo "<li>Đơn hàng <a href='order-detail.php?id_order={$order['order_id']}'>#{$order['order_id']}</a>
                           - Ngày: {$order['created_at']} - Tổng: {$order['order_total']}đ</li>";
                 }
                 echo "</ul></div></div>";

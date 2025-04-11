@@ -1,13 +1,16 @@
 <?php
 include("../admin/includes/header.php");
 
-$type = -1;
+$type = $_GET['type'] ?? -1;
+$from_date = $_GET['from_date'] ?? null;
+$to_date = $_GET['to_date'] ?? null;
+$location = $_GET['location'] ?? null;
 
 if (isset($_GET['type'])) {
     $type = $_GET['type'];
 }
 
-$orders = getAllOrder($type);
+$orders = getAllOrder($type, $from_date, $to_date, $location);
 
 ?>
 
@@ -27,6 +30,26 @@ $orders = getAllOrder($type);
                             <a href='./order.php?type=2' style="margin-left: 20px"><span class="badge badge-sm bg-gradient-primary">Đã đặt</span></a>
                             <a href='./order.php?type=3' style="margin-left: 20px"><span class='badge badge-sm bg-gradient-info'>Đang giao</span></a>
                             <a href='./order.php?type=4' style="margin-left: 20px"><span class="badge badge-sm bg-gradient-success">Hoàn tất</span></a>
+                            <form method="get" action="./order.php" class="row g-3 px-4 py-2">
+                                <div class="col-md-3">
+                                    <label for="from_date" class="form-label">Từ ngày</label>
+                                    <input type="date" class="form-control" id="from_date" name="from_date" value="<?= $_GET['from_date'] ?? '' ?>">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="to_date" class="form-label">Đến ngày</label>
+                                    <input type="date" class="form-control" id="to_date" name="to_date" value="<?= $_GET['to_date'] ?? '' ?>">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="location" class="form-label">Địa điểm giao</label>
+                                    <input type="text" class="form-control" id="location" name="location" placeholder="VD: Quận 1, TP.HCM" value="<?= $_GET['location'] ?? '' ?>">
+                                </div>
+                                <div class="col-md-2"></div>
+                                <div class="col-md-1 d-flex align-items-end">
+                                    <button type="submit" class="btn btn-primary w-100">Lọc</button>
+                                </div>
+                            </form>
 
                             <table class="table align-items-center mb-0">
                                 <thead>
@@ -58,10 +81,10 @@ $orders = getAllOrder($type);
                                                 </div>
                                             </td>
                                             <td>
-                                                <p class="text-xs font-weight-bold mb-0">
-                                                    <a href="./order-detail.php?id_order=<?= $order['id'] ?>">View now</a>
-                                                </p>
-                                                <p class="text-xs text-secondary mb-0">Quantity: <?= $order['quantity'] ?></p>
+                                                <!-- <p class="text-xs font-weight-bold mb-0">
+                                                    <a href="./order-detail.php?id_order=<?= $order['id'] ?>" class="btn btn-sm btn-warning">Chi tiết đơn hàng</a>
+                                                </p> -->
+                                                <p class="text-xs text-secondary mb-0">Số lượng: <?= $order['quantity'] ?></p>
                                             </td>
                                             <td>
                                                 <p class="text-xs font-weight-bold mb-0"><?= $order['address'] ?></p>

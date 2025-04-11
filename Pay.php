@@ -105,7 +105,8 @@ $(document).ready(function () {
           //alert("Đặt hàng thành công!");
           window.location.href = "cart-status.php";
         } else {
-          alert("Lỗi khi đặt hàng: " + response);
+          //alert("Lỗi khi đặt hàng: " + response);
+          location.reload();
         }
       },
       error: function (xhr, status, error) {

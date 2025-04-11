@@ -68,7 +68,6 @@ if (isset($_POST['order'])){
 
     if (!$name || !$phone || !$address) {
         $_SESSION['message'] = "Vui lòng điền đầy đủ thông tin thanh toán.";
-        header("Location: ../pay.php");
         exit();
     }
 
@@ -115,12 +114,10 @@ if (isset($_POST['order'])){
                             WHERE id = '$user_id'";
             mysqli_query($conn, $update_user);
 
-            $_SESSION['message'] = "Đặt hàng thành công!";
+            $_SESSION['message'] = "Đặt hàng thành công!!";
             echo 1;
         } else {
             $_SESSION['message'] = "Không thể tạo đơn hàng.";
-            //header("Location: ../pay.php");
-            //exit();
         }
     }
 

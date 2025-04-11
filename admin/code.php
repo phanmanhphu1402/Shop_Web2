@@ -189,29 +189,37 @@ else if(isset($_POST['update_product_btn']))
 }
 else if(isset($_POST['delete_product_btn']))
 {
-    $product_id=mysqli_real_escape_string($conn,$_POST['product_id']);
+    $product_id = mysqli_real_escape_string($conn, $_POST['product_id']);
 
-    $product_query="SELECT * FROM products WHERE id='$product_id'";
-    $product_query_run=mysqli_query($conn,$product_query);
-    $product_data=mysqli_fetch_array($product_query_run);
-    $image=$product_data['image'];
+    $product_query = "SELECT * FROM products WHERE id='$product_id'";
+    $product_query_run = mysqli_query($conn, $product_query);
+    $product_data = mysqli_fetch_array($product_query_run);
+    $image = $product_data['image'];
 
-    $delete_query= "DELETE FROM products WHERE id='$product_id'";
-    $delete_query_run=mysqli_query($conn,$delete_query);
-    
-    if($delete_query_run)
-    {
-        if(file_exists("../images/".$image))
-            {
-                unlink("../images/".$image);
+    // Bắt lỗi ngoại lệ MySQL
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
+    try {
+        $delete_query = "DELETE FROM products WHERE id='$product_id'";
+        $delete_query_run = mysqli_query($conn, $delete_query);
+
+        if ($delete_query_run) {
+            if (file_exists("../images/" . $image)) {
+                unlink("../images/" . $image);
             }
-        redirect("products.php","Xóa sản phẩm thành công");
-    }else
-    {
-        redirect("products.php","Không thể xóa sản phẩm vì có đơn hàng chứa sản phẩm đó");
-    }
+            redirect("products.php", "Xóa sản phẩm thành công");
+        }
 
+    } catch (mysqli_sql_exception $e) {
+        // Nếu lỗi là do khóa ngoại (foreign key)
+        if (strpos($e->getMessage(), 'a foreign key constraint fails') !== false) {
+            redirect("products.php", "Không thể xóa sản phẩm vì có đơn hàng chứa sản phẩm đó");
+        } else {
+            redirect("products.php", "Lỗi hệ thống: " . $e->getMessage());
+        }
+    }
 }
+
 else if(isset($_POST['add_blog_btn']))
 {
     $title          = $_POST['title'];
