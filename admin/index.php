@@ -67,7 +67,7 @@ include ("../admin/includes/header.php");
                     </div>
                     <div class="text-end pt-1">
                         <p class="text-sm mb-0 text-capitalize">Giảm giá</p>
-                        <h4 class="mb-0">$<?= totalPriceGet() ?></h4>
+                        <h4 class="mb-0"><?= totalPriceGet() ?> ₫</h4>
                     </div>
                     </div>
                     <hr class="dark horizontal my-0">

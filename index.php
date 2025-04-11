@@ -121,8 +121,8 @@ $blogs                  =   getBlogs($page, $search);
                                 <?= $product['name'] ?>
                             </div>
                             <div class="product-card-price">
-                                <span><del>$<?= $product['original_price'] ?></del></span>
-                                <span class="curr-price">$<?= $product['selling_price'] ?></span>
+                                <span><del><?= $product['original_price'] ?>₫</del></span>
+                                <span class="curr-price"><?= $product['selling_price'] ?>₫</span>
                             </div>
                         </div>
                     </div>  
@@ -201,7 +201,7 @@ $blogs                  =   getBlogs($page, $search);
                             </div>
                             <div class="product-card-price">
                                 <span><del>$<?= $product['original_price']?></del></span>
-                                <span class="curr-price">$<?= $product['selling_price']?></span>
+                                <span class="curr-price"><?= $product['selling_price']?> ₫</span>
                             </div>
                         </div>
                     </div>
