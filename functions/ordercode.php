@@ -57,59 +57,72 @@ if (isset($_POST['order'])){
     
     header("Location: ../cart.php");
 
-}else if (isset($_POST['buy_product'])){
-    $user_id    = $_SESSION['auth_user']['id'];
-    $payment_method = $_POST['payment_method'];
-    $addtional = $_POST['addtional'];
-    $check = true;
-    
-    // Lấy số lượng trong kho và số lượng đặt hàng
-    $query  =   "SELECT `order_detail`.`quantity`, `products`.`qty`,`products`.`id`, `products`.`name` FROM `order_detail`
-                JOIN `products` ON `order_detail`.`product_id` = `products`.`id`
-                WHERE `order_detail`.`status` = 1 AND `order_detail`.`user_id` = '$user_id'";    
+}else if (isset($_POST['buy_product'])) {
+    $user_id        = $_SESSION['auth_user']['id'];
+
+    $name           = mysqli_real_escape_string($conn, $_POST['name']);
+    $phone          = mysqli_real_escape_string($conn, $_POST['phone']);
+    $address        = mysqli_real_escape_string($conn, $_POST['address']);
+    $addtional      = mysqli_real_escape_string($conn, $_POST['addtional'] ?? '');
+    $payment_method = mysqli_real_escape_string($conn, $_POST['payment_method'] ?? 'bacs');
+
+    if (!$name || !$phone || !$address) {
+        $_SESSION['message'] = "Vui lòng điền đầy đủ thông tin thanh toán.";
+        header("Location: ../pay.php");
+        exit();
+    }
+
+    // Lấy đơn hàng chưa thanh toán
+    $query = "SELECT od.quantity, p.qty, p.id, p.name
+              FROM order_detail od
+              JOIN products p ON od.product_id = p.id
+              WHERE od.status = 1 AND od.user_id = '$user_id'";
     $check_products = mysqli_query($conn, $query);
 
-    // Kiểm tra số lượng trong kho và số luongj đặt của từng sản phẩm
-    foreach ($check_products as $product){
-        if ($product['quantity'] > $product['qty']){
-            $_SESSION['message'] = "Số lượng sản phẩm: " . $product['name'] . " không đủ trong kho. Chỉ còn " . $product['qty'] . " Sản phẩm";
+    $check = true;
+    foreach ($check_products as $product) {
+        if ($product['quantity'] > $product['qty']) {
+            $_SESSION['message'] = "Sản phẩm {$product['name']} chỉ còn {$product['qty']} cái trong kho.";
             $check = false;
             header("Location: ../cart.php");
-            break;
+            exit();
         }
     }
 
-    // Nếu hợp lệ sẽ tiền hành đặt hàng
-    if ($check) {   
-        $insert_query       = "INSERT INTO `orders`(`user_id`,`addtional`,`payment`) VALUES ('$user_id','$addtional','$payment_method')";
-        $insert_query_run   = mysqli_query($conn, $insert_query);
-        $order_id           = $conn->insert_id;
+    // Nếu mọi thứ ổn => tiến hành đặt hàng
+    if ($check) {
+        $insert_order = "INSERT INTO orders (user_id, addtional, payment)
+                         VALUES ('$user_id', '$addtional', '$payment_method')";
+        $run_order = mysqli_query($conn, $insert_order);
+        $order_id = mysqli_insert_id($conn);
 
-        $query =    "UPDATE `order_detail` SET `status` = '2', `order_id` = '$order_id'
-                    WHERE `user_id` = '$user_id' AND `status` = '1'";
-        mysqli_query($conn, $query);
-        // Cập nhập lại số lượng trong kho
-        foreach ($check_products as $product){
-            $qty        = $product['qty'] - $product['quantity'];
-            $product_id = $product['id'];
-            $query = "UPDATE `products` SET `qty` = '$qty' WHERE `id` = '$product_id'";
-            mysqli_query($conn, $query);
+        if ($run_order) {
+            // Cập nhật trạng thái trong order_detail
+            $update_detail = "UPDATE order_detail
+                              SET status = 2, order_id = '$order_id'
+                              WHERE user_id = '$user_id' AND status = 1";
+            mysqli_query($conn, $update_detail);
+
+            // Cập nhật lại số lượng tồn trong kho
+            foreach ($check_products as $product) {
+                $new_qty = $product['qty'] - $product['quantity'];
+                $product_id = $product['id'];
+                mysqli_query($conn, "UPDATE products SET qty = '$new_qty' WHERE id = '$product_id'");
+            }
+
+            // Cập nhật thông tin người dùng
+            $update_user = "UPDATE users SET name = '$name', phone = '$phone', address = '$address'
+                            WHERE id = '$user_id'";
+            mysqli_query($conn, $update_user);
+
+            $_SESSION['message'] = "Đặt hàng thành công!";
+            echo 1;
+        } else {
+            $_SESSION['message'] = "Không thể tạo đơn hàng.";
+            //header("Location: ../pay.php");
+            //exit();
         }
-
-        $id=$_SESSION['auth_user']['id'];
-        $name= $_POST['name'];
-        $phone= $_POST['phone'];
-        $address= $_POST['address'];
-        $update_query= "UPDATE `users` SET `name`='$name', `phone`='$phone', `address`='$address' WHERE `id`='$id' ";
-        $update_query_run=mysqli_query($conn,$update_query);
-        if($update_query_run)
-        {
-            $_SESSION['message']="Mua sản phẩm thành công";
-        }else $_SESSION['message']="Không thành công";
-        echo 1;
     }
-
-
 
 }else if(isset($_POST['rate'])){
     $user_id    = $_SESSION['auth_user']['id'];

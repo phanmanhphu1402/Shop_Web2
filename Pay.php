@@ -79,49 +79,37 @@ $data= mysqli_fetch_array($users);
     </script>
 
 <script>
-$(document).ready(function() {
-  $(".btn-buy").click(function(event) {
+$(document).ready(function () {
+  $(".btn-buy").click(function (event) {
     event.preventDefault();
 
-    let addtional = $("#order_comments").val();
-    let name = $("#name").val();
-    let phone = $("#phone").val();
-    let address = $("#address").val();
+    const form = $("#checkoutForm");
 
-    // Chuyển đổi form thành mảng các đối tượng thuộc tính và giá trị
-    var formDataArray = $("form").serializeArray();
+    // Thu thập dữ liệu từ form
+    var formDataArray = form.serializeArray();
 
-    // Kiểm tra radio button đã được chọn
-    if ($("#payment_method_bacs").is(":checked")) {
-      let payment_method_bacs = $("#payment_method_bacs").val();
-      formDataArray.push({ name: "payment_method", value: 0 });
-    }else{
-      let payment_method_cod = $("#payment_method_cod").val();
-      formDataArray.push({ name: "payment_method", value: 1 });
-    }
+    // Thêm thông tin radio vào
+    const paymentMethod = $("input[name='option-payment']:checked").val();
+    formDataArray.push({ name: "payment_method", value: paymentMethod === "bacs" ? 0 : 1 });
 
-    // Thêm biến tùy chỉnh vào mảng formDataArray
-    formDataArray.push({ name: "addtional", value: addtional });
-    formDataArray.push({ name: "name", value: name });
-    formDataArray.push({ name: "phone", value: phone });
-    formDataArray.push({ name: "address", value: address });
-
-    // Chuyển đổi mảng formDataArray thành chuỗi dữ liệu
+    // Chuyển đổi dữ liệu sang query string
     var formData = $.param(formDataArray);
-    console.log(formData);
-    // Gửi dữ liệu form thông qua AJAX
+
+    // Gửi request qua Ajax
     $.ajax({
       url: "./functions/ordercode.php",
-      type: "post",
+      type: "POST",
       data: formData,
-      success: function(response) {
-        if (response == 1) {
-            console.log(response);
-            //window.location.href = "cart-status.php";
+      success: function (response) {
+        if (response.trim() == "1") {
+          //alert("Đặt hàng thành công!");
+          window.location.href = "cart-status.php";
+        } else {
+          alert("Lỗi khi đặt hàng: " + response);
         }
       },
-      error: function(xhr, status, error) {
-        console.error(error);
+      error: function (xhr, status, error) {
+        console.error("Lỗi AJAX:", error);
       }
     });
   });

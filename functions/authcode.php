@@ -142,10 +142,5 @@ else if(isset($_POST['update_user_btn']))
             redirect("../user-profile.php","Mật khẩu không khớp, vui lòng nhập lại");
         }
     }
-
-    
-
-   
-   
 }
 ?>
