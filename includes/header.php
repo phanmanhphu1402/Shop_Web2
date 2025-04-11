@@ -161,7 +161,7 @@ $page = $page - 1;
                         </li>
                         <!-- end mega menu -->
                         <li><a href="./blog.php">blog</a></li>
-                        <li><a href="#">Liên lạc</a></li>
+                        <li><a href="./timkiem.php">Tìm kiếm nâng cao</a></li>
                     </ul>
                 </div>
             </div>

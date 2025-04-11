@@ -1,22 +1,23 @@
-<?php 
+<?php
 include("./includes/header.php");
 
 $bestSellingProducts    =   getBestSelling(8);
 $LatestProducts         =   getLatestProducts(8);
 $blogs                  =   getBlogs($page, $search);
 ?>
+
 <body>
-   <!-- hero section -->
+    <!-- hero section -->
     <div class="hero">
         <div class="slider">
             <div class="container">
-            <?php
-                $count = 0; 
-                foreach($bestSellingProducts as $product) { 
-                if ($count == 3){
-                    break;
-                }
-            ?>
+                <?php
+                $count = 0;
+                foreach ($bestSellingProducts as $product) {
+                    if ($count == 3) {
+                        break;
+                    }
+                ?>
                     <!-- slide item -->
                     <div class="slide">
                         <div class="info">
@@ -44,10 +45,10 @@ $blogs                  =   getBlogs($page, $search);
                         </div>
                     </div>
                     <!-- end slide item -->
-            <?php
-                $count ++;
-                } 
-            ?>
+                <?php
+                    $count++;
+                }
+                ?>
             </div>
             <!-- slider controller -->
             <button class="slide-controll slide-next">
@@ -64,28 +65,28 @@ $blogs                  =   getBlogs($page, $search);
     <!-- promotion section -->
     <div class="promotion">
         <div class="row">
-        <?php
-            $count = 0; 
-            foreach($LatestProducts as $product) { 
-            if ($count == 3){
-                break;
-            }
-        ?>
-            <div class="col-4 col-md-12 col-sm-12">
-                <div class="promotion-box">
-                    <div class="text">
-                        <h3><?= $product['name'] ?></h3>
-                        <a href="./product-detail.php?slug=<?= $product['slug'] ?>">
-                            <button class="btn-flat btn-hover"><span>Xem chi tiết</span></button>
-                        </a>
+            <?php
+            $count = 0;
+            foreach ($LatestProducts as $product) {
+                if ($count == 3) {
+                    break;
+                }
+            ?>
+                <div class="col-4 col-md-12 col-sm-12">
+                    <div class="promotion-box">
+                        <div class="text">
+                            <h3><?= $product['name'] ?></h3>
+                            <a href="./product-detail.php?slug=<?= $product['slug'] ?>">
+                                <button class="btn-flat btn-hover"><span>Xem chi tiết</span></button>
+                            </a>
+                        </div>
+                        <img src="./images/<?= $product['image'] ?>" alt="">
                     </div>
-                    <img src="./images/<?= $product['image'] ?>" alt="">
                 </div>
-            </div>
-        <?php
-            $count ++;
-            } 
-        ?>
+            <?php
+                $count++;
+            }
+            ?>
         </div>
     </div>
     <!-- end promotion section -->
@@ -98,35 +99,39 @@ $blogs                  =   getBlogs($page, $search);
             </div>
             <div class="row" id="latest-products">
                 <?php
-                    foreach($LatestProducts as $product) { 
+                foreach ($LatestProducts as $product) {
                 ?>
-                <div class="col-3 col-md-6 col-sm-12">
-                    <div class="product-card">
-                        <div class="product-card-img">
-                        <a href="./product-detail.php?slug=<?= $product['slug'] ?>">
-                            <img src="./images/<?= $product['image'] ?>" alt="">
-                            <img src="./images/<?= $product['image'] ?>" alt="">
-                        </a>
-                        </div>
-                        <div class="product-card-info">
-                            <div class="product-btn">
+                    <div class="col-3 col-md-6 col-sm-12">
+                        <div class="product-card">
+                            <div class="product-card-img">
+                                <a href="./product-detail.php?slug=<?= $product['slug'] ?>">
+                                    <img src="./images/<?= $product['image'] ?>" alt="">
+                                    <img src="./images/<?= $product['image'] ?>" alt="">
+                                </a>
+                            </div>
+                            <div class="product-card-info">
+                                <div class="product-btn">
                                     <button class="btn-flat btn-hover btn-shop-now">Mua ngay</button>
 
-                                <button class="btn-flat btn-hover btn-cart-add">
-                                    <i class='bx bxs-cart-add'></i>
-                                </button>
-                                
-                            </div>
-                            <div class="product-card-name">
-                                <?= $product['name'] ?>
-                            </div>
-                            <div class="product-card-price">
-                                <span><del><?= $product['original_price'] ?>₫</del></span>
-                                <span class="curr-price"><?= $product['selling_price'] ?>₫</span>
+                                    <button class="btn-flat btn-hover btn-cart-add">
+                                        <i class='bx bxs-cart-add'></i>
+                                    </button>
+
+                                </div>
+                                <div class="product-card-name">
+                                    <?= $product['name'] ?>
+                                </div>
+                                <div class="product-card-price">
+                                    <?php
+                                        $formatted_price = number_format($product['selling_price'], 0, ',', '.') . '₫';
+                                        $formatted_original = number_format($product['original_price'], 0, ',', '.') . '₫';
+                                    ?>
+                                    <span><del><?= $formatted_original ?></del></span>
+                                    <span class="curr-price"><?= $formatted_price ?></span>
+                                </div>
                             </div>
                         </div>
-                    </div>  
-                </div>
+                    </div>
                 <?php } ?>
             </div>
             <div class="section-footer">
@@ -140,29 +145,29 @@ $blogs                  =   getBlogs($page, $search);
     <div class="bg-second">
         <div class="section container">
             <div class="row">
-            <?php
-                foreach($bestSellingProducts as $product) { 
-            ?>
-                <div class="col-4 col-md-4">
-                    <div class="sp-item-img">
-                        <img src="./images/<?= $product['image'] ?>" alt="">
+                <?php
+                foreach ($bestSellingProducts as $product) {
+                ?>
+                    <div class="col-4 col-md-4">
+                        <div class="sp-item-img">
+                            <img src="./images/<?= $product['image'] ?>" alt="">
+                        </div>
                     </div>
-                </div>
-                <div class="col-7 col-md-8">
-                    <div class="sp-item-info">
-                        <div class="sp-item-name"><?= $product['name']?></div>
-                        <p class="sp-item-description">
-                            <?= $product['small_description']?>
-                        </p>
-                        <a href="./product-detail.php?slug=<?= $product['slug'] ?>">
-                            <button class="btn-flat btn-hover">Xem chi tiết</button>
-                        </a>
+                    <div class="col-7 col-md-8">
+                        <div class="sp-item-info">
+                            <div class="sp-item-name"><?= $product['name'] ?></div>
+                            <p class="sp-item-description">
+                                <?= $product['small_description'] ?>
+                            </p>
+                            <a href="./product-detail.php?slug=<?= $product['slug'] ?>">
+                                <button class="btn-flat btn-hover">Xem chi tiết</button>
+                            </a>
+                        </div>
                     </div>
-                </div>
-            <?php 
-                break; 
+                <?php
+                    break;
                 }
-            ?>
+                ?>
             </div>
         </div>
     </div>
@@ -176,36 +181,41 @@ $blogs                  =   getBlogs($page, $search);
             </div>
             <div class="row" id="best-products">
                 <?php
-                    foreach($bestSellingProducts as $product) { 
+                foreach ($bestSellingProducts as $product) {
                 ?>
-                <div class="col-3 col-md-6 col-sm-12">
-                    <div class="product-card">
-                    <div class="product-card-img">
-                        <a href="./product-detail.php?slug=<?= $product['slug'] ?>">
-                            <img src="./images/<?= $product['image'] ?>" alt="">
-                            <img src="./images/<?= $product['image'] ?>" alt="">
-                        </a>
-                        </div>
-                        <div class="product-card-info">
-                            <div class="product-btn">
+                    <div class="col-3 col-md-6 col-sm-12">
+                        <div class="product-card">
+                            <div class="product-card-img">
+                                <a href="./product-detail.php?slug=<?= $product['slug'] ?>">
+                                    <img src="./images/<?= $product['image'] ?>" alt="">
+                                    <img src="./images/<?= $product['image'] ?>" alt="">
+                                </a>
+                            </div>
+                            <div class="product-card-info">
+                                <div class="product-btn">
                                     <button class="btn-flat btn-hover btn-shop-now">Mua ngay</button>
-                                <button class="btn-flat btn-hover btn-cart-add">
-                                    <i class='bx bxs-cart-add'></i>
-                                </button>
-                                <button class="btn-flat btn-hover btn-cart-add">
-                                    <i class='bx bxs-heart'></i>
-                                </button>
-                            </div>
-                            <div class="product-card-name">
-                                <?= $product['name']?>
-                            </div>
-                            <div class="product-card-price">
-                                <span><del>$<?= $product['original_price']?></del></span>
-                                <span class="curr-price"><?= $product['selling_price']?> ₫</span>
+                                    <button class="btn-flat btn-hover btn-cart-add">
+                                        <i class='bx bxs-cart-add'></i>
+                                    </button>
+                                    <button class="btn-flat btn-hover btn-cart-add">
+                                        <i class='bx bxs-heart'></i>
+                                    </button>
+                                </div>
+                                <div class="product-card-name">
+                                    <?= $product['name'] ?>
+                                </div>
+                                <div class="product-card-price">
+                                    <?php
+                                    $formatted_price = number_format($product['selling_price'], 0, ',', '.') . '₫';
+                                    $formatted_original = number_format($product['original_price'], 0, ',', '.') . '₫';
+                                    ?>
+                                    <span><del><?= $formatted_original ?></del></span>
+                                    <span class="curr-price"><?= $formatted_price ?></span>
+
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 <?php } ?>
             </div>
             <div class="section-footer">
@@ -222,50 +232,50 @@ $blogs                  =   getBlogs($page, $search);
                 <h2>Bài viết mới nhất</h2>
             </div>
             <?php
-                $count = 0; 
-                foreach($blogs as $blog) { 
-                if ($count == 2){
+            $count = 0;
+            foreach ($blogs as $blog) {
+                if ($count == 2) {
                     break;
                 }
             ?>
-            <?php if ($count == 0) { ?>
-                <div class="blog">
-                    <div class="blog-img">
-                        <img src="./images/<?= $blog['img'] ?>" alt="">
-                    </div>
-                    <div class="blog-info">
-                        <div class="blog-title">
-                            <?= $blog['title'] ?>
+                <?php if ($count == 0) { ?>
+                    <div class="blog">
+                        <div class="blog-img">
+                            <img src="./images/<?= $blog['img'] ?>" alt="">
                         </div>
-                        <div class="blog-preview">
-                            <?= $blog['small_content'] ?>
+                        <div class="blog-info">
+                            <div class="blog-title">
+                                <?= $blog['title'] ?>
+                            </div>
+                            <div class="blog-preview">
+                                <?= $blog['small_content'] ?>
+                            </div>
+                            <a href="./blog-detail.php?slug=<?= $blog['slug'] ?>">
+                                <button class="btn-flat btn-hover">Đọc Thêm</button>
+                            </a>
                         </div>
-                        <a href="./blog-detail.php?slug=<?= $blog['slug'] ?>">
-                            <button class="btn-flat btn-hover">Đọc Thêm</button>
-                        </a>
                     </div>
-                </div>
-            <?php } else { ?>
-                <div class="blog row-revere">
-                    <div class="blog-img">
-                        <img src="./images/<?= $blog['img'] ?>" alt="">
-                    </div>
-                    <div class="blog-info">
-                        <div class="blog-title">
-                            <?= $blog['title'] ?>
+                <?php } else { ?>
+                    <div class="blog row-revere">
+                        <div class="blog-img">
+                            <img src="./images/<?= $blog['img'] ?>" alt="">
                         </div>
-                        <div class="blog-preview">
-                            <?= $blog['small_content'] ?>
+                        <div class="blog-info">
+                            <div class="blog-title">
+                                <?= $blog['title'] ?>
+                            </div>
+                            <div class="blog-preview">
+                                <?= $blog['small_content'] ?>
+                            </div>
+                            <a href="./blog-detail.php?slug=<?= $blog['slug'] ?>">
+                                <button class="btn-flat btn-hover">Đọc Thêm</button>
+                            </a>
                         </div>
-                        <a href="./blog-detail.php?slug=<?= $blog['slug'] ?>">
-                            <button class="btn-flat btn-hover">Đọc Thêm</button>
-                        </a>
                     </div>
-                </div>
             <?php
                 }
-                $count ++;
-            } 
+                $count++;
+            }
             ?>
             <div class="section-footer">
                 <a href="./blog.php" class="btn-flat btn-hover">Xem tất cả</a>
@@ -277,4 +287,5 @@ $blogs                  =   getBlogs($page, $search);
     <script src="./assets/js/app.js"></script>
     <script src="./assets/js/index.js"></script>
 </body>
+
 </html>
