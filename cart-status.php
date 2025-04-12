@@ -103,10 +103,10 @@ if (!isset($_SESSION['auth_user']['id'])){
                                     ?>
                                     </td>
                                     <td>
-                                        $
                                         <span class="total-price">
                                             <?= $order['total'] ?>
                                         </span>
+                                        đ
                                     </td>
                                     <td>
                                         <?php 
