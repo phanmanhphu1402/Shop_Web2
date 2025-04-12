@@ -1,10 +1,41 @@
 <?php
-
 include("./includes/header.php");
+include("./config/dbcon.php"); // Đảm bảo có kết nối CSDL nếu chưa có
 
-$products   =   getLatestProducts(9, $page, $type, $search);
-$page ++;
+// Lấy tham số
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$type = isset($_GET['type']) ? $_GET['type'] : null;
+$limit = 8;
+$offset = ($page - 1) * $limit;
+
+// Xây dựng câu truy vấn lọc sản phẩm
+$sql = "SELECT * FROM products WHERE status = 0";
+$countSql = "SELECT COUNT(*) as total FROM products WHERE status = 0";
+$category_query = mysqli_query($conn, "SELECT name FROM categories WHERE slug = '$type' LIMIT 1");
+if ($category_query && mysqli_num_rows($category_query) > 0) {
+    $category_name = mysqli_fetch_assoc($category_query)['name'];
+}
+$category_name = null;
+if ($type) {
+    $type = mysqli_real_escape_string($conn, $type);
+    $sql .= " AND category_id IN (SELECT id FROM categories WHERE slug = '$type')";
+    $countSql .= " AND category_id IN (SELECT id FROM categories WHERE slug = '$type')";
+}
+
+$sql .= " ORDER BY created_at DESC LIMIT $limit OFFSET $offset";
+
+// Lấy dữ liệu sản phẩm
+$result = mysqli_query($conn, $sql);
+$products = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+// Lấy tổng số sản phẩm
+$countResult = mysqli_query($conn, $countSql);
+$total = mysqli_fetch_assoc($countResult)['total'];
+$totalPages = ceil($total / $limit);
+
 ?>
+
+
 
 <body>
     <!-- products content -->
@@ -15,6 +46,10 @@ $page ++;
                     <a href="index.php">Trang chủ</a>
                     <span><i class='bx bxs-chevrons-right'></i></span>
                     <a href="./products.php">Tất cả sản phẩm</a>
+                    <?php if ($category_name): ?>
+                        <span><i class='bx bxs-chevrons-right'></i></span>
+                        <span><?= $category_name ?></span>
+                    <?php endif; ?>
                 </div>
             </div>
             <div class="box">
@@ -37,19 +72,11 @@ $page ++;
                                 <?php
                                     }
                                 } else {
-                                    echo "no";
+                                    echo "Không có danh mục nào";
                                 }
                                 ?>
-
                             </ul>
                         </div>
-                        <!-- <div class="box">
-                            <ul class="filter-list">
-                                <li>
-                                    <button type="submit" class="btn btn-primary">OK</button>
-                                </li>
-                            </ul>
-                        </div> -->
                     </div>
                     <div class="col-9 col-md-12">
                         <div class="box filter-toggle-box">
@@ -61,10 +88,10 @@ $page ++;
                                 <div class="col-3 col-md-4 col-sm-6">
                                     <div class="product-card">
                                         <div class="product-card-img">
-                                        <a href="./product-detail.php?slug=<?= $product['slug'] ?>">
-                                        <img src="./images/<?= $product['image'] ?>" alt="">
-                                        <img src="./images/<?= $product['image'] ?>" alt="">
-                                    </a>
+                                            <a href="./product-detail.php?slug=<?= $product['slug'] ?>">
+                                                <img src="./images/<?= $product['image'] ?>" alt="">
+                                                <img src="./images/<?= $product['image'] ?>" alt="">
+                                            </a>
                                         </div>
                                         <div class="product-card-info">
                                             <div class="product-btn">
@@ -94,28 +121,26 @@ $page ++;
                             <?php } ?>
                             </div>
                         </div>
-                        <div class="box">
-                            <ul class="pagination">
-                                <?php 
-                                // if ($page != 1) {
-                                //     $page--;
-                                //     echo "<li><a href='?page=$page'><i class='bx bxs-chevron-left'></i></a></li>";
-                                //     $page++;
-                                // }
-                                for($i = 1 ; $i <= ceil(totalValue('products')/9) ; $i++) { 
-                                    if ($i == $page) {
-                                        echo "<li><a class='active'>$i</a></li>";
-                                    }else{
-                                        echo "<li><a href='?page=$i'>$i</a></li>";
-                                    }
-                                } 
-                                // if ($page != ceil(totalValue('products')/9)){
-                                //     $page ++;
-                                //     echo "<li><a href='?page=$page'><i class='bx bxs-chevron-right'></i></a></li>";
-                                // }
-                                ?>
-                            </ul>
-                        </div>
+
+                        <!-- Phân trang -->
+                        <?php if ($totalPages > 1): ?>
+                            <div class="box">
+                                <ul class="pagination">
+                                    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                                        <?php
+                                            $queryParams = "?page=$i";
+                                            if ($type) $queryParams .= "&type=$type";
+                                        ?>
+                                        <li>
+                                            <a href="products.php<?= $queryParams ?>" <?= ($i == $page) ? "class='active'" : "" ?>>
+                                                <?= $i ?>
+                                            </a>
+                                        </li>
+                                    <?php endfor; ?>
+                                </ul>
+                            </div>
+                        <?php endif; ?>
+
                     </div>
                 </div>
             </div>
@@ -129,5 +154,4 @@ $page ++;
     <script src="./assets/js/app.js"></script>
     <script src="./assets/js/products.js"></script>
 </body>
-
 </html>

@@ -15,14 +15,14 @@ include ("../admin/includes/header.php");
                         <i class="material-icons opacity-10">person</i>
                     </div>
                     <div class="text-end pt-1">
-                        <p class="text-sm mb-0 text-capitalize">Khách hàng</p>
+                        <p class="text-sm mb-0 text-capitalize">Người dùng</p>
                         <h4 class="mb-0"><?= totalValue('users') ?></h4>
                     </div>
                     </div>
                     <hr class="dark horizontal my-0">
-                    <div class="card-footer p-3">
+                    <!-- <div class="card-footer p-3">
                     <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+3% </span>so với tháng trước</p>
-                    </div>
+                    </div> -->
                 </div>
                 </div>
                 <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
@@ -37,9 +37,9 @@ include ("../admin/includes/header.php");
                     </div>
                     </div>
                     <hr class="dark horizontal my-0">
-                    <div class="card-footer p-3">
+                    <!-- <div class="card-footer p-3">
                     <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+55% </span>so với tuần trước</p>
-                    </div>
+                    </div> -->
                 </div>
                 </div>
                 <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
@@ -54,9 +54,9 @@ include ("../admin/includes/header.php");
                     </div>
                     </div>
                     <hr class="dark horizontal my-0">
-                    <div class="card-footer p-3">
+                    <!-- <div class="card-footer p-3">
                     <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">-2%</span> so với hôm qua </p>
-                    </div>
+                    </div> -->
                 </div>
                 </div>
                 <div class="col-xl-3 col-sm-6">
@@ -66,14 +66,14 @@ include ("../admin/includes/header.php");
                         <i class="material-icons opacity-10">weekend</i>
                     </div>
                     <div class="text-end pt-1">
-                        <p class="text-sm mb-0 text-capitalize">Giảm giá</p>
+                        <p class="text-sm mb-0 text-capitalize">Tổng tiền thu được</p>
                         <h4 class="mb-0"><?= totalPriceGet() ?> ₫</h4>
                     </div>
                     </div>
                     <hr class="dark horizontal my-0">
-                    <div class="card-footer p-3">
+                    <!-- <div class="card-footer p-3">
                     <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+5% </span>so với hôm qua</p>
-                    </div>
+                    </div> -->
                 </div>
                 </div>
             </div>
