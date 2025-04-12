@@ -219,22 +219,22 @@ tbody, td, tfoot, th, thead, tr {
                                         <center><a style="color:#0d6efd" href="./product-detail.php?slug=<?= $order['slug']?>" title="Sản phẩm"><?= $order['name']?></a></center> <br>
                                     </td>
                                     <td><center ><?= $order['slug']?></center></td>
-                                    <td class="text-right "><center >$<?= $order['selling_price']?></center></td>
+                                    <td class="text-right "><center ><?= $order['selling_price']?>đ</center></td>
                                     <td class="text-center "><?= $order['quantity']?></td>
-                                    <td class="text-right "><center>$<?= $order['selling_price']*$order['quantity']?></center></td>
+                                    <td class="text-right "><center><?= $order['selling_price']*$order['quantity']?>đ</center></td>
                                 </tr>
                                 <?php } ?>
                                 <tr class="order_summary">
                                     <td colspan="4" class="text-center "><b>Giá sản phẩm</b></td>
-                                    <td class="text-right"><b><center>$<?= $order_total?></center></b></td>
+                                    <td class="text-right"><b><center><?= $order_total?>đ</center></b></td>
                                 </tr>
                                 <tr class="order_summary">
                                     <td colspan="4" class="text-center "><b>Chuyển phát nhanh GHN</b></td>
-                                    <td class="text-right"><b><center>$0</center></b></td>
+                                    <td class="text-right"><b><center>0đ</center></b></td>
                                 </tr>
                                 <tr class="order_summary order_total">
                                     <td colspan="4" class="text-center "><b>Tổng tiền</b></td>
-                                    <td class="text-right"><b><center>$<?= $order_total?></center></b></td>
+                                    <td class="text-right"><b><center><?= $order_total?>đ</center></b></td>
                                 </tr>
                                 </tbody>
                             </table>
