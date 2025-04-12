@@ -30,13 +30,15 @@ include ("../admin/includes/header.php");
                                     foreach($products as $item)
                                     {
                                     ?>
-                                        <tr>
+                                        <tr class="<?= $item['status'] == '1' ? 'opacity-50' : '' ?>">
                                             <td><?= $item['id'];?> </td>
                                             <td><?= $item['name'];?></td>
                                             <td>
                                                 <img src="../images/<?= $item['image']; ?>" width="50px" height="50px" alt="<?= $item['name'];?>">
                                             <td>
-                                                <?= $item['status'] == '0' ? "Hiển thị":"Ẩn"?>
+                                                <span class="badge <?= $item['status'] == '0' ? 'bg-success' : 'bg-secondary' ?>">
+                                                    <?= $item['status'] == '0' ? "Còn hàng" : "Đã ẩn" ?>
+                                                </span>
                                             </td> 
                                             <td>
                                                 <a href="edit-product.php?id=<?= $item['id'];?>" class="btn btn-primary">Sửa</a>                                 

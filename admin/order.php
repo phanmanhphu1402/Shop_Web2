@@ -59,6 +59,7 @@ $orders = getAllOrder($type, $from_date, $to_date, $location);
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Sản phẩm</th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Địa chỉ </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Trạng thái</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Đánh giá</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Thời gian đặt </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Thao tác</th>
                                     </tr>
@@ -99,6 +100,15 @@ $orders = getAllOrder($type, $from_date, $to_date, $location);
                                                 } else if ($order['status'] == 4) {
                                                     echo '<span class="badge badge-sm bg-gradient-success">Hoàn tất</span>';
                                                 }
+                                                ?>
+                                            </td>
+                                            <td class="text-center">
+                                                <?php 
+                                                    if (isset($order['rate']) && $order['rate'] > 0) {
+                                                        echo str_repeat("⭐", $order['rate']); // ví dụ 4 => ⭐⭐⭐⭐
+                                                    } else {
+                                                        echo 'Chưa đánh giá';
+                                                    }
                                                 ?>
                                             </td>
                                             <td class="align-middle text-center">

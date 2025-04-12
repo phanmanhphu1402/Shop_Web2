@@ -47,26 +47,53 @@ function getBestSelling($numberGet){
                 LIMIT $numberGet";
     return mysqli_query($conn, $query);
 }
-function getLatestProducts($numberGet,$page = 0,$type = "",$search=""){
+function getLatestProducts($numberGet, $page = 0, $type = "", $search = "") {
     global $conn;
     $page_extra = $numberGet * $page;
 
-    if ($type != ""){
-        $categoryId     = getBySlug("categories", $type);
-        $categoryId     = mysqli_fetch_array($categoryId)['id'];
-        $query =    "SELECT * FROM `products` 
-                WHERE `name` LIKE '%$search%' AND `category_id` = '$categoryId'
-                ORDER BY `id` DESC 
-                LIMIT $numberGet OFFSET $page_extra";
-    }else{
-        $query =    "SELECT * FROM `products` 
-                WHERE `name` LIKE '%$search%'
-                ORDER BY `id` DESC 
-                LIMIT $numberGet OFFSET $page_extra";
+    $where = [];
+
+    // Tìm kiếm theo tên sản phẩm
+    if (!empty($search)) {
+        $search = mysqli_real_escape_string($conn, $search);
+        $where[] = "`name` LIKE '%$search%'";
     }
-    
+
+    // Lọc theo loại sản phẩm (slug -> category_id)
+    if (!empty($type)) {
+        $category = getBySlug("categories", $type);
+        if ($category && mysqli_num_rows($category) > 0) {
+            $categoryData = mysqli_fetch_array($category);
+            $categoryId = (int) $categoryData['id'];
+            $where[] = "`category_id` = $categoryId";
+        }
+    }
+
+    // Lọc theo khoảng giá
+    if (!empty($_GET['min_price'])) {
+        $min_price = (int) $_GET['min_price'];
+        $where[] = "`selling_price` >= $min_price";
+    }
+
+    if (!empty($_GET['max_price'])) {
+        $max_price = (int) $_GET['max_price'];
+        $where[] = "`selling_price` <= $max_price";
+    }
+
+    // Gộp điều kiện WHERE
+    $where_sql = "";
+    if (!empty($where)) {
+        $where_sql = "WHERE " . implode(" AND ", $where);
+    }
+
+    $query = "SELECT * FROM `products` 
+              $where_sql 
+              ORDER BY `id` DESC 
+              LIMIT $numberGet OFFSET $page_extra";
+
     return mysqli_query($conn, $query);
 }
+
 function getBlogs($page, $keyWold){
     global $conn;
     $page_extra = 10 * $page;
@@ -137,7 +164,8 @@ function getOrderByUserId(){
                         o.status,
                         o.id,
                         o.created_at,
-                        o.addtional
+                        o.addtional,
+                        od.rate
                     FROM
                         orders o
                     JOIN

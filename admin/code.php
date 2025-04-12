@@ -211,9 +211,12 @@ else if(isset($_POST['delete_product_btn']))
         }
 
     } catch (mysqli_sql_exception $e) {
-        // Nếu lỗi là do khóa ngoại (foreign key)
         if (strpos($e->getMessage(), 'a foreign key constraint fails') !== false) {
-            redirect("products.php", "Không thể xóa sản phẩm vì có đơn hàng chứa sản phẩm đó");
+            // Cập nhật status = 1 (ẩn)
+            $update_status_query = "UPDATE products SET status = 1 WHERE id='$product_id'";
+            mysqli_query($conn, $update_status_query);
+    
+            redirect("products.php", "Không thể xóa sản phẩm vì có đơn hàng chứa sản phẩm đó, đã chuyển sang ẩn");
         } else {
             redirect("products.php", "Lỗi hệ thống: " . $e->getMessage());
         }
