@@ -4,6 +4,8 @@ include("./config/dbcon.php"); // Đảm bảo có kết nối CSDL nếu chưa 
 
 // Lấy tham số
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+
+
 $type = isset($_GET['type']) ? $_GET['type'] : null;
 $limit = 8;
 $offset = ($page - 1) * $limit;
@@ -68,7 +70,7 @@ $totalPages = ceil($total / $limit);
                                 if (mysqli_num_rows($categories) > 0) {
                                     foreach ($categories as $item) {
                                 ?>
-                                        <li><a href="./products.php?type=<?= $item['slug']?>"><?= $item['name']; ?></a></li>
+                                        <li><a href="./products.php?type=<?= $item['slug'] ?>"><?= $item['name']; ?></a></li>
                                 <?php
                                     }
                                 } else {
@@ -84,41 +86,41 @@ $totalPages = ceil($total / $limit);
                         </div>
                         <div class="box">
                             <div class="row" id="products">
-                            <?php foreach ($products as $product) { ?>
-                                <div class="col-3 col-md-4 col-sm-6">
-                                    <div class="product-card">
-                                        <div class="product-card-img">
-                                            <a href="./product-detail.php?slug=<?= $product['slug'] ?>">
-                                                <img src="./images/<?= $product['image'] ?>" alt="">
-                                                <img src="./images/<?= $product['image'] ?>" alt="">
-                                            </a>
-                                        </div>
-                                        <div class="product-card-info">
-                                            <div class="product-btn">
-                                                <a href="./product-detail.php?slug=<?= $product['slug'] ?>" class="btn-flat btn-hover btn-shop-now">Mua ngay</a>
-                                                <button class="btn-flat btn-hover btn-cart-add">
-                                                    <i class='bx bxs-cart-add'></i>
-                                                </button>    
+                                <?php foreach ($products as $product) { ?>
+                                    <div class="col-3 col-md-4 col-sm-6">
+                                        <div class="product-card">
+                                            <div class="product-card-img">
+                                                <a href="./product-detail.php?slug=<?= $product['slug'] ?>">
+                                                    <img src="./images/<?= $product['image'] ?>" alt="">
+                                                    <img src="./images/<?= $product['image'] ?>" alt="">
+                                                </a>
                                             </div>
-                                            <div class="product-card-name">
-                                                <?= $product['name'] ?>
-                                            </div>
-                                            <div class="product-price">
-                                                <?php 
+                                            <div class="product-card-info">
+                                                <div class="product-btn">
+                                                    <a href="./product-detail.php?slug=<?= $product['slug'] ?>" class="btn-flat btn-hover btn-shop-now">Mua ngay</a>
+                                                    <button class="btn-flat btn-hover btn-cart-add">
+                                                        <i class='bx bxs-cart-add'></i>
+                                                    </button>
+                                                </div>
+                                                <div class="product-card-name">
+                                                    <?= $product['name'] ?>
+                                                </div>
+                                                <div class="product-price">
+                                                    <?php
                                                     $formatted_price = number_format($product['selling_price'], 0, ',', '.') . '₫';
                                                     $formatted_original = number_format($product['original_price'], 0, ',', '.') . '₫';
-                                                ?>
-                                                <span style="color: red; font-weight: bold;">
-                                                    <?= $formatted_price ?>
-                                                </span>
-                                                <del style="color: gray; opacity: 0.6; margin-left: 8px;">
-                                                    <?= $formatted_original ?>
-                                                </del>
+                                                    ?>
+                                                    <span style="color: red; font-weight: bold;">
+                                                        <?= $formatted_price ?>
+                                                    </span>
+                                                    <del style="color: gray; opacity: 0.6; margin-left: 8px;">
+                                                        <?= $formatted_original ?>
+                                                    </del>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            <?php } ?>
+                                <?php } ?>
                             </div>
                         </div>
 
@@ -128,8 +130,8 @@ $totalPages = ceil($total / $limit);
                                 <ul class="pagination">
                                     <?php for ($i = 1; $i <= $totalPages; $i++): ?>
                                         <?php
-                                            $queryParams = "?page=$i";
-                                            if ($type) $queryParams .= "&type=$type";
+                                        $queryParams = "?page=$i";
+                                        if ($type) $queryParams .= "&type=$type";
                                         ?>
                                         <li>
                                             <a href="products.php<?= $queryParams ?>" <?= ($i == $page) ? "class='active'" : "" ?>>
@@ -154,4 +156,5 @@ $totalPages = ceil($total / $limit);
     <script src="./assets/js/app.js"></script>
     <script src="./assets/js/products.js"></script>
 </body>
+
 </html>
