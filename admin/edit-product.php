@@ -32,6 +32,7 @@ include("../admin/includes/header.php");
                                             <select name="category_id" class="form-select mb-2">
                                                 <option selected>Chọn danh mục</option>
                                                 <?php
+                                                
                                                 $categories = getAll("categories");
                                                 if (mysqli_num_rows($categories) > 0) {
                                                     foreach ($categories as $item) {
