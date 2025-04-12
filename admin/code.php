@@ -8,7 +8,7 @@ if (isset($_POST['add_category_btn'])) {
     $name = $_POST['name'];
     $slug = $_POST['slug'] . "-" . rand(10, 99);
     $description = $_POST['description'];
-    $status = isset($_POST['status']) ? '1' : '0';
+    $status = isset($_POST['status']) ? $_POST['status'] : '1';
     $image = $_FILES['image']['name'];
 
     $path = "../images";
@@ -32,7 +32,7 @@ if (isset($_POST['add_category_btn'])) {
     $name = $_POST['name'];
     $slug = $_POST['slug'];
     $description = $_POST['description'];
-    $status = isset($_POST['status']) ? '1' : '0';
+    $status = isset($_POST['status']) ? $_POST['status'] : '0';
 
     $new_image = $_FILES['image']['name'];
     $old_image = $_POST['old_image'];
