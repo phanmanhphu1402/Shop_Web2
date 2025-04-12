@@ -41,7 +41,6 @@ if (isset($_POST['add_category_btn'])) {
         //$update_filename= $new_image;
         $image_ext = pathinfo($new_image, PATHINFO_EXTENSION);
         $update_filename = time() . '.' . $image_ext;
-
     } else {
         $update_filename = $old_image;
     }
@@ -78,7 +77,6 @@ if (isset($_POST['add_category_btn'])) {
         redirect("category.php", "Xóa danh mục thành công");
     } else {
         redirect("caterory.php", "Đã xảy ra lỗi");
-
     }
 } else if (isset($_POST['update_product_btn'])) {
     $product_id = $_POST['product_id'];
@@ -136,6 +134,39 @@ if (isset($_POST['add_category_btn'])) {
         }
     }
     redirect("edit-product.php?id=$product_id", "Cập nhật sản phẩm thành công");
+} else if (isset($_POST['add_product_btn'])) {
+    $category_id = $_POST['category_id'];
+    $name = mysqli_real_escape_string($conn, $_POST['name']);
+    $slug = mysqli_real_escape_string($conn, $_POST['slug']) . "-" . rand(10, 99);
+    $small_description = mysqli_real_escape_string($conn, $_POST['small_description']);
+    $description = mysqli_real_escape_string($conn, $_POST['description']);
+    $original_price = $_POST['original_price'];
+    $selling_price = $_POST['selling_price'];
+    $status = isset($_POST['status']) ? $_POST['status'] : '1';
+    $qty = $_POST['qty'];
+
+    $image = $_FILES['image']['name'];
+    $path = "../images";
+    $image_ext = pathinfo($image, PATHINFO_EXTENSION);
+    $filename = time() . '.' . $image_ext;
+
+    if ($name != "" && $slug != "" && $selling_price != "") {
+        $product_query = "INSERT INTO products 
+        (category_id, name, slug, small_description, description, original_price, selling_price, qty, status, image) 
+        VALUES 
+        ('$category_id', '$name', '$slug', '$small_description', '$description', '$original_price', '$selling_price', '$qty', '$status', '$filename')";
+
+        $product_query_run = mysqli_query($conn, $product_query);
+
+        if ($product_query_run) {
+            move_uploaded_file($_FILES['image']['tmp_name'], $path . '/' . $filename);
+            redirect("add-product.php", "Thêm sản phẩm thành công");
+        } else {
+            redirect("add-product.php", "Đã xảy ra lỗi khi thêm sản phẩm");
+        }
+    } else {
+        redirect("add-product.php", "Vui lòng nhập đầy đủ thông tin sản phẩm");
+    }
 } else if (isset($_POST['delete_product_btn'])) {
     $product_id = mysqli_real_escape_string($conn, $_POST['product_id']);
 
@@ -157,13 +188,12 @@ if (isset($_POST['add_category_btn'])) {
             }
             redirect("products.php", "Xóa sản phẩm thành công");
         }
-
     } catch (mysqli_sql_exception $e) {
         if (strpos($e->getMessage(), 'a foreign key constraint fails') !== false) {
             // Cập nhật status = 1 (ẩn)
             $update_status_query = "UPDATE products SET status = 1 WHERE id='$product_id'";
             mysqli_query($conn, $update_status_query);
-    
+
             redirect("products.php", "Không thể xóa sản phẩm vì có đơn hàng chứa sản phẩm đó, đã chuyển sang ẩn");
         } else {
             redirect("products.php", "Lỗi hệ thống: " . $e->getMessage());
@@ -213,7 +243,6 @@ if (isset($_POST['add_category_btn'])) {
         //$update_filename= $new_image;
         $image_ext = pathinfo($new_image, PATHINFO_EXTENSION);
         $update_filename = time() . '.' . $image_ext;
-
     } else {
         $update_filename = $old_image;
     }
@@ -264,7 +293,6 @@ if (isset($_POST['add_category_btn'])) {
         redirect("blog.php", "Xóa bài viết thành công");
     } else {
         redirect("blog.php", "Đã xảy ra lỗi");
-
     }
 } else if (isset($_GET['order'])) {
     $order_id = $_GET['id'];
@@ -340,4 +368,3 @@ if (isset($_POST['add_category_btn'])) {
 } {
     //header('Location: ./index.php');
 }
-?>
