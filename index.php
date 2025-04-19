@@ -1,9 +1,9 @@
 <?php
 include("./includes/header.php");
 
-$bestSellingProducts    =   getBestSelling(8);
-$LatestProducts         =   getLatestProducts(8);
-$blogs                  =   getBlogs($page, $search);
+$bestSellingProducts = getBestSelling(8);
+$LatestProducts = getLatestProducts(8);
+$blogs = getBlogs($page, $search);
 ?>
 
 <body>
@@ -17,7 +17,7 @@ $blogs                  =   getBlogs($page, $search);
                     if ($count == 3) {
                         break;
                     }
-                ?>
+                    ?>
                     <!-- slide item -->
                     <div class="slide">
                         <div class="info">
@@ -45,7 +45,7 @@ $blogs                  =   getBlogs($page, $search);
                         </div>
                     </div>
                     <!-- end slide item -->
-                <?php
+                    <?php
                     $count++;
                 }
                 ?>
@@ -71,7 +71,7 @@ $blogs                  =   getBlogs($page, $search);
                 if ($count == 3) {
                     break;
                 }
-            ?>
+                ?>
                 <div class="col-4 col-md-12 col-sm-12">
                     <div class="promotion-box">
                         <div class="text">
@@ -83,7 +83,7 @@ $blogs                  =   getBlogs($page, $search);
                         <img src="./images/<?= $product['image'] ?>" alt="">
                     </div>
                 </div>
-            <?php
+                <?php
                 $count++;
             }
             ?>
@@ -100,7 +100,7 @@ $blogs                  =   getBlogs($page, $search);
             <div class="row" id="latest-products">
                 <?php
                 foreach ($LatestProducts as $product) {
-                ?>
+                    ?>
                     <div class="col-3 col-md-6 col-sm-12">
                         <div class="product-card">
                             <div class="product-card-img">
@@ -111,20 +111,21 @@ $blogs                  =   getBlogs($page, $search);
                             </div>
                             <div class="product-card-info">
                                 <div class="product-btn">
-                                    <button class="btn-flat btn-hover btn-shop-now">Mua ngay</button>
+                                    <a href="./product-detail.php?slug=<?= $product['slug'] ?>">
+                                        <button class="btn-flat btn-hover btn-shop-now">Mua ngay</button>
+                                    </a>
 
-                                    <button class="btn-flat btn-hover btn-cart-add">
+                                    <!-- <button class="btn-flat btn-hover btn-cart-add">
                                         <i class='bx bxs-cart-add'></i>
-                                    </button>
-
+                                    </button> -->
                                 </div>
                                 <div class="product-card-name">
                                     <?= $product['name'] ?>
                                 </div>
                                 <div class="product-card-price">
                                     <?php
-                                        $formatted_price = number_format($product['selling_price'], 0, ',', '.') . '₫';
-                                        $formatted_original = number_format($product['original_price'], 0, ',', '.') . '₫';
+                                    $formatted_price = number_format($product['selling_price'], 0, ',', '.') . '₫';
+                                    $formatted_original = number_format($product['original_price'], 0, ',', '.') . '₫';
                                     ?>
                                     <span><del><?= $formatted_original ?></del></span>
                                     <span class="curr-price"><?= $formatted_price ?></span>
@@ -147,7 +148,7 @@ $blogs                  =   getBlogs($page, $search);
             <div class="row">
                 <?php
                 foreach ($bestSellingProducts as $product) {
-                ?>
+                    ?>
                     <div class="col-4 col-md-4">
                         <div class="sp-item-img">
                             <img src="./images/<?= $product['image'] ?>" alt="">
@@ -164,7 +165,7 @@ $blogs                  =   getBlogs($page, $search);
                             </a>
                         </div>
                     </div>
-                <?php
+                    <?php
                     break;
                 }
                 ?>
@@ -182,7 +183,7 @@ $blogs                  =   getBlogs($page, $search);
             <div class="row" id="best-products">
                 <?php
                 foreach ($bestSellingProducts as $product) {
-                ?>
+                    ?>
                     <div class="col-3 col-md-6 col-sm-12">
                         <div class="product-card">
                             <div class="product-card-img">
@@ -193,10 +194,12 @@ $blogs                  =   getBlogs($page, $search);
                             </div>
                             <div class="product-card-info">
                                 <div class="product-btn">
-                                    <button class="btn-flat btn-hover btn-shop-now">Mua ngay</button>
-                                    <button class="btn-flat btn-hover btn-cart-add">
+                                    <a href="./product-detail.php?slug=<?= $product['slug'] ?>">
+                                        <button class="btn-flat btn-hover btn-shop-now">Mua ngay</button>
+                                    </a>
+                                    <!-- <button class="btn-flat btn-hover btn-cart-add">
                                         <i class='bx bxs-cart-add'></i>
-                                    </button>
+                                    </button> -->
                                     <button class="btn-flat btn-hover btn-cart-add">
                                         <i class='bx bxs-heart'></i>
                                     </button>
@@ -237,7 +240,7 @@ $blogs                  =   getBlogs($page, $search);
                 if ($count == 2) {
                     break;
                 }
-            ?>
+                ?>
                 <?php if ($count == 0) { ?>
                     <div class="blog">
                         <div class="blog-img">
@@ -272,7 +275,7 @@ $blogs                  =   getBlogs($page, $search);
                             </a>
                         </div>
                     </div>
-            <?php
+                    <?php
                 }
                 $count++;
             }

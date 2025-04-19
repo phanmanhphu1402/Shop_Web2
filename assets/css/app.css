@@ -664,17 +664,157 @@ ul.devided > li:last-child {
     bottom: 10px;
 }
 
-footer {
-    padding: 100px 0;
+.footer {
+    background-color: #1f1f1f;
+    color: #ccc;
+    font-family: 'Segoe UI', sans-serif;
+    padding-top: 50px;
 }
 
-.footer-head {
+.footer a {
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer a:hover {
+    color: #ffffff;
+}
+
+.footer h4 {
+    color: #ffffff;
+    font-size: 18px;
     margin-bottom: 20px;
-    text-transform: uppercase;
+    position: relative;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #555;
 }
 
-footer ul li {
+.footer .contact-list li,
+.footer .widget-links li {
     margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.footer .contact-list li i,
+.footer .widget-links li i {
+    width: 20px;
+    margin-right: 10px;
+    color: #ff9800;
+}
+
+.footer .subscribe-form {
+    margin-top: 20px;
+}
+
+.footer .form-group {
+    display: flex;
+    background-color: #2a2a2a;
+    border-radius: 30px;
+    overflow: hidden;
+}
+
+.footer .form-control {
+    border: none;
+    padding: 10px 15px;
+    background: transparent;
+    color: #fff;
+    width: 100%;
+    outline: none;
+}
+
+.btn-subscribe {
+    background-color: #ff9800;
+    border: none;
+    padding: 0 20px;
+    color: white;
+    transition: background 0.3s ease;
+}
+
+.btn-subscribe:hover {
+    background-color: #e68900;
+}
+
+.footer .social-media h4 {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #ffffff;
+}
+
+.footer .social-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.footer .social-list li a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #2a2a2a;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    color: white;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.footer .social-list li a:hover {
+    background: #ff9800;
+    transform: scale(1.1);
+}
+
+.footer-bottom {
+    background-color: #161616;
+    padding: 15px 0;
+    margin-top: 30px;
+}
+
+.footer-bottom p {
+    color: #aaa;
+    margin: 0;
+    font-size: 14px;
+}
+
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #ff9800;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 50%;
+    display: none;
+    z-index: 999;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    transition: background 0.3s ease;
+}
+
+.back-to-top:hover {
+    background-color: #e68900;
+}
+
+.back-to-top.show {
+    display: block;
+}
+
+/* Responsive (có thể thêm nếu cần) */
+@media (max-width: 768px) {
+    .footer .form-group {
+        flex-direction: column;
+    }
+
+    .btn-subscribe {
+        width: 100%;
+        border-radius: 0 0 30px 30px;
+    }
+
+    .footer .social-list {
+        justify-content: center;
+    }
 }
 
 .contact-header {

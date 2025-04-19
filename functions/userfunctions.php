@@ -42,17 +42,22 @@ function totalValue($table)
 function getBestSelling($numberGet)
 {
     global $conn;
-    $query =    "SELECT `products`.*, COUNT(`order_detail`.id) as total_buy FROM `products` 
-                LEFT JOIN `order_detail` ON `products`.`id` = `order_detail`.`product_id`
-                GROUP BY `products`.`id`
-                ORDER BY `total_buy` DESC
-                LIMIT $numberGet";
+    $query = "SELECT `products`.*, COUNT(`order_detail`.id) as total_buy 
+              FROM `products` 
+              LEFT JOIN `order_detail` ON `products`.`id` = `order_detail`.`product_id`
+              WHERE `products`.`status` = 0
+              GROUP BY `products`.`id`
+              ORDER BY `total_buy` DESC
+              LIMIT $numberGet";
     return mysqli_query($conn, $query);
 }
 function getLatestProducts($limit, $offset = 0, $type = "", $search = "", $min_price = null, $max_price = null)
 {
     global $conn;
     $where = [];
+
+    // Trạng thái hiển thị sản phẩm
+    $where[] = "`status` = 0";
 
     // Tên sản phẩm
     if (!empty($search)) {

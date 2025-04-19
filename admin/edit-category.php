@@ -16,7 +16,7 @@ include("../admin/includes/header.php");
                 ?>
                         <div class="card">
                             <div class="card-header">
-                                <h4>Edit Category</h4>
+                                <h4>Chỉnh sửa danh mục</h4>
                             </div>
                             <div class="card-body">
                                 <form action="code.php" method="POST" enctype="multipart/form-data"><!-- Uploads image -->
@@ -24,24 +24,24 @@ include("../admin/includes/header.php");
                                     <div class="row">
                                         <div class="col-md-12">
                                             <input type="hidden" name="category_id" value="<?= $data['id'] ?>">
-                                            <label for=""><b>Name</b></label>
-                                            <input type="text" id="full-name" required value="<?= $data['name'] ?>" name="name" placeholder="Enter Category Name" class="form-control">
+                                            <label for=""><b>Tên danh mục</b></label>
+                                            <input type="text" id="full-name" required value="<?= $data['name'] ?>" name="name" placeholder="Nhập tên danh mục" class="form-control">
                                         </div>
                                         <div class="col-md-12">
                                             <br>
-                                            <label for=""><b>Slug</b></label>
-                                            <input type="text" id="slug-name" required value="<?= $data['slug'] ?>" name="slug" placeholder="Enter slug" class="form-control">
+                                            <label for=""><b>Đường dẫn (Slug)</b></label>
+                                            <input type="text" id="slug-name" required value="<?= $data['slug'] ?>" name="slug" placeholder="Nhập slug" class="form-control">
                                         </div>
                                         <div class="col-md-12">
                                             <br>
-                                            <label for=""><b>Description</b></label>
-                                            <input type="text" required value="<?= $data['description'] ?>" name="description" placeholder="Enter Description" class="form-control">
+                                            <label for=""><b>Mô tả</b></label>
+                                            <input type="text" required value="<?= $data['description'] ?>" name="description" placeholder="Nhập mô tả" class="form-control">
                                         </div>
                                         <div class="col-md-12">
                                             <br>
-                                            <label for=""><b>Image</b></label>
+                                            <label for=""><b>Hình ảnh</b></label>
                                             <input type="file" name="image" class="form-control">
-                                            <label for="">Current Image</label>
+                                            <label for="">Hình ảnh hiện tại</label>
                                             <input type="hidden" name="old_image" value="<?= $data['image'] ?>">
                                             <img src="../images/<?= $data['image'] ?>" height="50px" width="50px" alt="">
 
@@ -64,7 +64,7 @@ include("../admin/includes/header.php");
                                         </div>
                                         <div class="col-md-12">
                                             <br>
-                                            <button type="submit" class="btn btn-primary" name="update_category_btn">Update</button>
+                                            <button type="submit" class="btn btn-primary" name="update_category_btn">Cập nhật</button>
                                         </div>
                                     </div>
                                 </form>
@@ -72,10 +72,10 @@ include("../admin/includes/header.php");
                         </div>
                 <?php
                     } else {
-                        echo "Category not found";
+                        echo "Không tìm thấy danh mục";
                     }
                 } else {
-                    echo "Id missing from url";
+                    echo "Thiếu ID trên URL";
                 }
                 ?>
             </div>

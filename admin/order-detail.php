@@ -38,20 +38,18 @@ function formatCurrency($number)
                                         echo '<span class="badge badge-sm bg-gradient-info">Đang giao hàng</span>';
                                     } else if ($order['status'] == 4) {
                                         echo '<span class="badge badge-sm bg-gradient-success">Hoàn tất</span>';
-                                    }
+                                    }   
                                     ?>
-                                    <strong>Cập nhật thành:</strong>
                                     <?php
                                     $id_order = $order['order_id'];
                                     if ($order['status'] == 2) {
-                                        echo "<a href='./code.php?order=3&id=$id_order'><span class='badge badge-sm bg-gradient-info'>Đang giao hàng</span></a>";
+                                        echo "<strong>Cập nhật thành:</strong> <a href='./code.php?order=3&id=$id_order'><span class='badge badge-sm bg-gradient-info'>Đang giao hàng</span></a>";
                                     } else if ($order["status"] == 3) {
-                                        echo "<a href='./code.php?order=4&id=$id_order'><span class='badge badge-sm bg-gradient-success'>Đã giao hàng</span></a>";
-                                    } else if ($order["status"] == 4) {
-                                        echo '<span class="badge badge-sm bg-gradient-success">Hoàn tất</span>';
+                                        echo "<strong>Cập nhật thành:</strong> <a href='./code.php?order=4&id=$id_order'><span class='badge badge-sm bg-gradient-success'>Đã giao hàng</span></a>";
                                     }
+                                    // Không hiển thị gì nếu đã hoàn tất (status == 4)
                                     ?>
-                                <?php break;
+                                    <?php break;
                                 } ?>
                             </div>
                         </div>
@@ -59,9 +57,14 @@ function formatCurrency($number)
                         <table class="table align-items-center mb-0">
                             <thead>
                                 <tr>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tên sản phẩm</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Thông tin</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Thời gian đặt hàng</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tên
+                                        sản phẩm</th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Thông tin</th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Thời gian đặt hàng</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -71,11 +74,13 @@ function formatCurrency($number)
                                         <td>
                                             <div class="d-flex px-2 py-1">
                                                 <div>
-                                                    <img src="../images/<?= $order['image'] ?>" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                                                    <img src="../images/<?= $order['image'] ?>"
+                                                        class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
                                                 </div>
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <h6 class="mb-0 text-sm"><?= $order['name_product'] ?></h6>
-                                                    <p class="text-xs text-secondary mb-0">Giá: <?= formatCurrency($order['selling_price']) ?></p>
+                                                    <p class="text-xs text-secondary mb-0">Giá:
+                                                        <?= formatCurrency($order['selling_price']) ?></p>
                                                 </div>
                                             </div>
                                         </td>
