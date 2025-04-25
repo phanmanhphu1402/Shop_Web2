@@ -4,6 +4,7 @@ include("./config/dbcon.php"); // Đảm bảo có kết nối CSDL nếu chưa 
 
 // Lấy tham số
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$search = isset($_GET['search']) ? mysqli_real_escape_string($conn, $_GET['search']) : '';
 
 
 $type = isset($_GET['type']) ? $_GET['type'] : null;
@@ -13,6 +14,10 @@ $offset = ($page - 1) * $limit;
 // Xây dựng câu truy vấn lọc sản phẩm
 $sql = "SELECT * FROM products WHERE status = 0";
 $countSql = "SELECT COUNT(*) as total FROM products WHERE status = 0";
+if (!empty($search)) {
+    $sql .= " AND name LIKE '%$search%'";
+    $countSql .= " AND name LIKE '%$search%'";
+}
 $category_query = mysqli_query($conn, "SELECT name FROM categories WHERE slug = '$type' LIMIT 1");
 if ($category_query && mysqli_num_rows($category_query) > 0) {
     $category_name = mysqli_fetch_assoc($category_query)['name'];
@@ -132,6 +137,7 @@ $totalPages = ceil($total / $limit);
                                         <?php
                                         $queryParams = "?page=$i";
                                         if ($type) $queryParams .= "&type=$type";
+                                        if ($search) $queryParams .= "&search=" . urlencode($search);
                                         ?>
                                         <li>
                                             <a href="products.php<?= $queryParams ?>" <?= ($i == $page) ? "class='active'" : "" ?>>

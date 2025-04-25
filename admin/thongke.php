@@ -11,11 +11,11 @@ include("../admin/includes/header.php");
 
         <form method="GET" class="row g-3 align-items-end">
             <div class="col-md-auto">
-            <label class="bg-light px-2 py-1 rounded d-inline-block">Từ ngày:</label>
+                <label class="bg-light px-2 py-1 rounded d-inline-block">Từ ngày:</label>
                 <input type="date" class="form-control" name="from" value="<?= isset($_GET['from']) ? $_GET['from'] : '' ?>">
             </div>
             <div class="col-md-auto">
-            <label class="bg-light px-2 py-1 rounded d-inline-block">Đến ngày:</label>
+                <label class="bg-light px-2 py-1 rounded d-inline-block">Đến ngày:</label>
                 <input type="date" class="form-control bg-li" name="to" value="<?= isset($_GET['to']) ? $_GET['to'] : '' ?>">
             </div>
             <div class="col-md-auto">
@@ -37,11 +37,11 @@ include("../admin/includes/header.php");
             include('includes/footer.php');
             exit;
         }
-        $whereClause = "WHERE o.created_at BETWEEN '$from' AND '$to'";
+        $whereClause = "WHERE o.created_at BETWEEN '$from 00:00:00' AND '$to 23:59:59'";
     } elseif ($from) {
-        $whereClause = "WHERE o.created_at >= '$from'";
+        $whereClause = "WHERE o.created_at >= '$from 00:00:00'";
     } elseif ($to) {
-        $whereClause = "WHERE o.created_at <= '$to'";
+        $whereClause = "WHERE o.created_at <= '$to 23:59:59'";
     }
 
     $query = "
@@ -68,24 +68,31 @@ include("../admin/includes/header.php");
                         <?php
                         $user_id = $user['user_id'];
                         $order_detail_query = "
-                            SELECT o.id AS order_id, o.created_at,
-                                SUM(od.selling_price * od.quantity) AS order_total
-                            FROM orders o
-                            JOIN order_detail od ON od.order_id = o.id
-                            WHERE o.user_id = '$user_id' " . ($whereClause ? "AND " . substr($whereClause, 6) : "") . "
-                            GROUP BY o.id
-                            ORDER BY o.created_at DESC
-                        ";
+                    SELECT o.id AS order_id, o.created_at,
+                        SUM(od.selling_price * od.quantity) AS order_total
+                    FROM orders o
+                    JOIN order_detail od ON od.order_id = o.id
+                    WHERE o.user_id = '$user_id' AND od.status = 4 " . ($whereClause ? "AND " . substr($whereClause, 6) : "") . "
+                    GROUP BY o.id
+                    ORDER BY o.created_at DESC
+                ";
                         $orders = mysqli_query($conn, $order_detail_query);
-                        while ($order = mysqli_fetch_assoc($orders)):
+
+                        if (mysqli_num_rows($orders) > 0):
+                            while ($order = mysqli_fetch_assoc($orders)):
                         ?>
-                            <li class="mb-1">
-                                🧾 <a href='order-detail.php?id_order=<?= $order['order_id'] ?>'>
-                                    Đơn hàng #<?= $order['order_id'] ?></a>
-                                - 📅 <?= $order['created_at'] ?>
-                                - 💰 <strong><?= number_format($order['order_total'], 0, ',', '.') ?>₫</strong>
-                            </li>
-                        <?php endwhile; ?>
+                                <li class="mb-1">
+                                    🧾 <a href='order-detail.php?id_order=<?= $order['order_id'] ?>'>
+                                        Đơn hàng #<?= $order['order_id'] ?></a>
+                                    - 📅 <?= $order['created_at'] ?>
+                                    - 💰 <strong><?= number_format($order['order_total'], 0, ',', '.') ?>₫</strong>
+                                </li>
+                        <?php
+                            endwhile;
+                        else:
+                            echo "<li class='text-muted'>❗ Hiện tại chưa có đơn hàng nào ở trạng thái “hoàn thành”.</li>";
+                        endif;
+                        ?>
                     </ul>
                 </div>
             </div>

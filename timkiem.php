@@ -104,9 +104,9 @@ $products = getLatestProducts($limit, $offset, $type, $search, $min_price, $max_
                                             <div class="product-card-info">
                                                 <div class="product-btn">
                                                     <a href="./product-detail.php?slug=<?= $product['slug'] ?>" class="btn-flat btn-hover btn-shop-now">Mua ngay</a>
-                                                    <button class="btn-flat btn-hover btn-cart-add">
+                                                    <!-- <button class="btn-flat btn-hover btn-cart-add">
                                                         <i class='bx bxs-cart-add'></i>
-                                                    </button>
+                                                    </button> -->
 
                                                 </div>
                                                 <div class="product-card-name">
