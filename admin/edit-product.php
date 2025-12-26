@@ -61,7 +61,7 @@ include("../admin/includes/header.php");
                                         <!-- Slug -->
                                         <div class="col-md-6">
                                             <br>
-                                            <label class="mb-0"><b>Slug</b></label>
+                                            <label class="mb-0"><b>Đường dẫn (Slug)</b></label>
                                             <input type="text" required name="slug" value="<?= $data['slug']; ?>"
                                                 placeholder="Nhập slug" class="form-control mb-2">
                                         </div>

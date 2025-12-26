@@ -39,7 +39,7 @@ include("../admin/includes/header.php");
                                 </div>
                                 <div class="col-md-6">
                                     <br>
-                                    <label class="mb-0"><b>Slug</b></label>
+                                    <label class="mb-0"><b>Đường dẫn (Slug)</b></label>
                                     <input type="text" id="slug-name" required name="slug" placeholder="Nhập slug" class="form-control mb-2">
                                 </div>
                                 <div class="col-md-12">

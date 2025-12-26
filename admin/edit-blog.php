@@ -31,7 +31,7 @@ include ("../admin/includes/header.php");
                                 </div>                               
                                 <div class="col-md-12">
                                 <br>
-                                    <label for=""><b>Slug</b></label>
+                                    <label for=""><b>Slug(Đường dẫn)</b></label>
                                     <input type="text" id="slug-name" required name="slug" placeholder="Enter slug" value="<?= $blog['slug'] ?>" class="form-control">
                                 </div>                                                        
                                 <div class="col-md-12">

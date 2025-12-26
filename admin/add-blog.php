@@ -20,7 +20,7 @@ include ("../admin/includes/header.php");
                                 </div>                               
                                 <div class="col-md-12">
                                 <br>
-                                    <label for=""><b>Slug</b></label>
+                                    <label for=""><b>Đường dẫn (Slug)</b></label>
                                     <input type="text" id="slug-name" required name="slug" placeholder="Nhập vào slug" class="form-control">
                                 </div>                                                        
                                 <div class="col-md-12">
